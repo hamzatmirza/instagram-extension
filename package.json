@@ -9,6 +9,8 @@
     "bootstrap": "^5.0.1",
     "bootstrap-vue": "^2.21.2",
     "bulma-fluent": "^0.3.25",
+    "core-js": "^3.14.0",
+    "regenerator-runtime": "^0.13.7",
     "vue": "^2.6.11"
   },
   "description": "vue-chrome-extension-boilerplate",
@@ -17,6 +19,8 @@
     "@babel/preset-env": "^7.10.4",
     "archiver": "^4.0.2",
     "babel-loader": "^8.1.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^3.6.0",
