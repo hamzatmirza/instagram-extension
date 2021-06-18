@@ -4,7 +4,7 @@
       <div class="col-12">
         <b-row class="my-1">
     <b-col sm="10">
-      <label >SET THE TIME FOR EACH INSTAGRAM REQUEST IN SECONDS</label>
+      <label >SET THE TIME FOR INSTAGRAM REQUEST IN SECONDS</label>
     </b-col>
     <b-col sm="2">
  <b-form-input
@@ -207,6 +207,8 @@ export default {
 
       this.scrapperRunning=true;
       for(let i = 0;i<this.pendingList.length;i++){
+            
+
         if(this.scrapperRunning==false){console.log("SCRAPPER STOPPED");break;}
         console.log("LOOP ITERATION");
         console.log("PREVIOUS SCARAPPED DATA",this.instaScrapped);
