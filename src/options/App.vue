@@ -27,7 +27,13 @@
         </b-button>
       </div>
       <div class="col-6">
-
+        <b-button
+          variant="success"
+          @click="getUpdateList"
+          :disabled="pendingListLoading"
+        >
+          Get To Update List
+        </b-button>
       </div>
     </div>
     <div
@@ -145,26 +151,34 @@ export default {
       pendingListLoading:false,
       pendingListFields:[],
       pendingListCurrentPage:1,
-      pendingListperPage:5,
+      pendingListperPage:50,
       scrapperStarted:false,
       instaScrapped:[],
       scrapperRunning:false,
       scrapperTableFields:["biography","username","followedBy","follow"],
       timeDelay:1,
       scrappedDataCurrentPage:1,
-      scrappedDataPerPage:5,
+      scrappedDataPerPage:50,
       isUploadingToWebsite:false,
-      failedUsernames:[]
+      failedUsernames:[],
+      updateList:null,
+      endPoint:""
     }
   },
   methods:{
     uploadToWebsite(){
     const _this = this;
     this.isUploadingToWebsite = true;
-       axios.post("https://igprfl.com/wp-json/instascrapper/v1/create",{"scrappedData":this.instaScrapped}).then(function(response){
+    if(this.updateList = true){
+        this.endPoint = "https://igprfl.com/wp-json/instascrapper/v1/updateList";
+    }else{
+      this.endPoint = "https://igprfl.com/wp-json/instascrapper/v1/create";
+    }
+
+
+       axios.post(this.endPoint,{"scrappedData":this.instaScrapped}).then(function(response){
         console.log(response.data);
         _this.instaScrapped = [];
-        _this.pendingScrapper();
         _this.isUploadingToWebsite = false;
      });
     },
@@ -207,7 +221,7 @@ export default {
 
       this.scrapperRunning=true;
       for(let i = 0;i<this.pendingList.length;i++){
-            
+
 
         if(this.scrapperRunning==false){console.log("SCRAPPER STOPPED");break;}
         console.log("LOOP ITERATION");
@@ -225,10 +239,23 @@ export default {
 
     },
     getPendingsList(){
+      this.instaScrapped = [];
+      this.updateList = false;
       this.pendingListLoading = true;
       // https://www.instagram.com/hamza.t.mirza/?__a=1
       const _this = this;
        axios.get("https://igprfl.com/wp-json/instascrapper/v1/pendings").then(function(response){
+        _this.pendingList = response.data;
+        _this.pendingListLoading = false;
+     });
+    },
+    getUpdateList(){
+      this.instaScrapped = [];
+      this.updateList=true;
+ this.pendingListLoading = true;
+      // https://www.instagram.com/hamza.t.mirza/?__a=1
+      const _this = this;
+       axios.get("https://igprfl.com/wp-json/instascrapper/v1/updateList").then(function(response){
         _this.pendingList = response.data;
         _this.pendingListLoading = false;
      });
